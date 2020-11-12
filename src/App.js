@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+/* eslint-disable */
+import React, {Component} from 'react'; 
+import { createGlobalStyle } from 'styled-components';
+import TodoTemplate from './TodolistTemplate.js';
+import TodoHead from './TodoHead.js';
+import TodoList from './TodoList.js';
+
+const GlobalStyle = createGlobalStyle` // 전역에 styled component 사용
+  body {
+    background: #e9ecef;
+  }
+`;
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <GlobalStyle />
+      <TodoTemplate>
+        <TodoHead />
+        <TodoList />
+      </TodoTemplate>
+    </>
   );
 }
 
