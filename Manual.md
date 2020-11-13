@@ -45,7 +45,7 @@ function App() {  // 이 과정에서 Global Style Component로 감싸는 것이
 export default App;
 ```
 
-## C. TodoTemplate 만들기 
+## C-1. TodoTemplate 만들기 
 ```jsx
 1. TodoTemplate.js 파일 생성
 2. CSS로 스타일링 및 TodoTemplate Component 생성
@@ -57,7 +57,7 @@ function TodoTemplate({ children }) { // {children} 는 props??
 }
 ```
 
-## D. TodoHead 만들기
+## C-2. TodoHead 만들기
 ```jsx
 1. TodoHead.js 파일 생성
 2. CSS로 스타일링 및 TodoHead Component생성
@@ -65,7 +65,7 @@ function TodoTemplate({ children }) { // {children} 는 props??
 3. App.js에서 import TodoHead from './TodoHead.js'; 해와 사용   
 ```
 
-## E. TodoList 만들기
+## C-3. TodoList 만들기
 ```jsx
 1. TodoList.js 파일 생성
 2. CSS로 스타일링 및 TodoList Component생성
@@ -73,7 +73,7 @@ function TodoTemplate({ children }) { // {children} 는 props??
   - <TodoHead>와 같이 <TodoTemplate>안에 배치
 ```
 
-## F.TodoItem 만들기
+## C-4.TodoItem 만들기
 ```jsx
 1.TodoItem.js 파일 생성
 2. Styled Component로 CSS꾸며 사용
@@ -94,13 +94,13 @@ function TodoList() {
 }
 ```
 ```jsx
-function TodoItem(props) {
-  return (
+function TodoItem(props) { // props 대신 { id, done, text } 가능
+  return (                 // 그럴 경우에는 props.done 이 아닌 done으로 사용
       
     <TodoItemBlock>
-      <CheckCircle done={props.done}>{props.done && <MdDone />}</CheckCircle>
-      <Text done={props.done}>{props.text}</Text>
-      <Remove>
+      <CheckCircle done={props.done}>{props.done && <MdDone />}</CheckCircle> // done이 true면 MdDone유무 및 색 바꿔줌
+      <Text done={props.done}>{props.text}</Text>  // done의 값에 따라 text색 바꿔줌
+      <Remove>                              // TodoItemBlock 위에 커서가 있을 때 보여주는 Remove Component
         <MdDelete />
       </Remove>
     </TodoItemBlock>
@@ -108,4 +108,36 @@ function TodoItem(props) {
   );
 }
 ```
+
+## C-5. TodoCreate
+> 새로운 항목을 등록할 수 있는 컴포넌트로 useState를 이용해 open값을 관리하고 아이콘 및 버튼색상 변화
+```jsx
+여기서는 새로운 값을 등록하려고 버튼을 눌렀을 때 input태그를 보여주는 형식이다.
+MdAdd아이콘 import
+```
+```jsx
+function TodoCreate() {
+  const [open, setOpen] = useState(false);
+
+  const onToggle = () => setOpen(!open); // open값 바꿔주기
+  // onClick ={()=> setOpen(!open)}
+  return (
+    <>
+      {open && ( // open=true일 때 컴포넌트 보여줌.
+        <InsertFormPositioner>
+          <InsertForm>
+            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+          </InsertForm>
+        </InsertFormPositioner>
+      )}
+      <CircleButton onClick={onToggle} open={open}>  // 버튼을 눌렀을 때, open값 변경
+        <MdAdd />
+      </CircleButton>
+    </>
+  );
+}
+```
+
+
+
 
