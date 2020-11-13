@@ -109,7 +109,7 @@ function TodoItem(props) { // props 대신 { id, done, text } 가능
 }
 ```
 
-## C-5. TodoCreate
+## C-5. TodoCreate 만들기
 > 새로운 항목을 등록할 수 있는 컴포넌트로 useState를 이용해 open값을 관리하고 아이콘 및 버튼색상 변화
 ```jsx
 여기서는 새로운 값을 등록하려고 버튼을 눌렀을 때 input태그를 보여주는 형식이다.
