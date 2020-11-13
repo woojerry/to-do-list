@@ -63,6 +63,7 @@ function TodoTemplate({ children }) { // {children} 는 props??
 2. CSS로 스타일링 및 TodoHead Component생성
   - 날짜 및 요일
 3. App.js에서 import TodoHead from './TodoHead.js'; 해와 사용   
+```
 
 ## E. TodoList 만들기
 ```jsx
