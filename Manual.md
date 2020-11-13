@@ -70,3 +70,4 @@ function TodoTemplate({ children }) { // {children} 는 props??
 2. CSS로 스타일링 및 TodoList Component생성
 3. App.js에서 import TodoHead from './TodoList.js'; 해와 사용
   - <TodoHead>와 같이 <TodoTemplate>안에 배치
+
