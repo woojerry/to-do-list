@@ -73,3 +73,39 @@ function TodoTemplate({ children }) { // {children} 는 props??
   - <TodoHead>와 같이 <TodoTemplate>안에 배치
 ```
 
+## F.TodoItem 만들기
+```jsx
+1.TodoItem.js 파일 생성
+2. Styled Component로 CSS꾸며 사용
+3. 구성요소 <CheckCircle>, <Text>, <Remove>, 
+4. <MdDone>,<MdDelete> 아이콘 import
+5. TodoList에서 import해 사용. props문법 적용
+```
+```jsx
+function TodoList() {
+    return (
+        <TodoListBlock>
+          <TodoItem text="프로젝트 생성하기" done={true} />
+          <TodoItem text="컴포넌트 스타일링 하기" done={true} />
+          <TodoItem text="Context 만들기" done={false} />
+          <TodoItem text="기능 구현하기" done={false} />
+        </TodoListBlock>
+      );
+}
+```
+```jsx
+function TodoItem(props) {
+  return (
+      
+    <TodoItemBlock>
+      <CheckCircle done={props.done}>{props.done && <MdDone />}</CheckCircle>
+      <Text done={props.done}>{props.text}</Text>
+      <Remove>
+        <MdDelete />
+      </Remove>
+    </TodoItemBlock>
+    
+  );
+}
+```
+
