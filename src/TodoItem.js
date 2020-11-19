@@ -1,6 +1,7 @@
-import React from 'react';
+import React , {useContext} from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
+import {할일context} from './App.js' 
 
 const Remove = styled.div`
   display: flex;
@@ -58,12 +59,16 @@ const Text = styled.div`
     `}
 `;
 
-function TodoItem(props) {
+function TodoItem() {
+
+  let 할일 = useContext(할일context); 
   return (
+
+    
       
     <TodoItemBlock>
-      <CheckCircle done={props.done}>{props.done && <MdDone />}</CheckCircle>
-      <Text done={props.done}>{props.text}</Text>
+      <CheckCircle done={할일.done}>{할일.done && <MdDone />}</CheckCircle>
+      <Text done={할일.done}>{할일.text}</Text>
       <Remove>
         <MdDelete />
       </Remove>

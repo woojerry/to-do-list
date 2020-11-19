@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem.js';
+import {할일context} from './App.js'
 
 const TodoListBlock = styled.div`
   flex: 1;
@@ -10,14 +11,20 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
+
+  let 할일 = useContext(할일context); 
+
     return (
         <TodoListBlock>
-          <TodoItem text="프로젝트 생성하기" done={true} />
-          <TodoItem text="컴포넌트 스타일링 하기" done={true} />
-          <TodoItem text="Context 만들기" done={false} />
-          <TodoItem text="기능 구현하기" done={false} />
+            
+          {할일.map((할일들) =>(
+            <TodoItem key={할일.id} text={할일.text} done={할일.done}/>
+          ))}
+          
+          
+      
         </TodoListBlock>
-      );
+      )
 }
 
 export default TodoList;
