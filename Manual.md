@@ -139,6 +139,10 @@ function TodoCreate() {
 ```
 <hr>
 
+## Context API를 활용해 값 보여주기
+- 각 컴포넌트들이 App > TodoList > TodoItem
+
+
 ## 해야할 것 
 > 기본적인 틀 및 CSS에 대한 이해를 거쳐 이제 내 스스로 짜보려하나 쉽지않았다.
 ```
