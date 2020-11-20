@@ -140,7 +140,57 @@ function TodoCreate() {
 <hr>
 
 ## Context API를 활용해 값 보여주기
-- 각 컴포넌트들이 App > TodoList > TodoItem
+> 각 컴포넌트들의 구조가 App > TodoList > TodoItem 일 때, props문법 대신 Context API를 활용해 원래 할일들에 대한 정보를 보여주기
+```jsx
+구조는 APP -> TodoList -> TodoItem 으로 할일의 데이터 바인딩을 하려고 한다.
+1. useContext를 import해온 뒤, 범위를 생성하고 App.js에서 TodoList.js로 보내야 하므로 export도 해준다.
+2. TodoList.js에서 useContext로 공유된 값 가져와 map으로 반복해주기
+```
+```jsx
+// App.js에서 1번
+import React, {Component, useState, useContext} from 'react'; 
+
+export let 할일context = React.createContext(); // 범위 생성 및 export
+
+return (
+    <>
+    <할일context.Provider value={할일}> // 범위로 감싸기 
+      <GlobalStyle />
+        <TodoTemplate>
+
+          <TodoHead />
+
+        
+                <TodoList/>
+          
+          
+          <TodoCreate />
+
+        </TodoTemplate>
+      </할일context.Provider>
+    </>
+  );
+}
+```
+```jsx
+// TodoList.js에서 2번 
+
+import {할일context} from './App.js' // 공유된 값 가져오기 
+
+function TodoList() {
+
+  let 할일 = useContext(할일context); // 공유된 값 가져오기
+    
+  return (
+        <TodoListBlock>
+          {할일.map(({id, text, done}) =>(
+            <TodoItem key={id} text={text} done={done}/>
+          ))}
+        </TodoListBlock>
+      )
+}
+```
+
 
 
 ## 해야할 것 
