@@ -233,19 +233,18 @@ function TodoItem({id, text, done}) {
   );
 }
 ```
-- ContextAPI는 저장소 ? 인데 데이터를 보내고 보내고 이렇게 2번은 안되는건가 ? 무언가 이해는 되는 것 같은데 표현을 못하겠다.
-- Q. ContextAPI를 사용하여 TodoList -> TodoList에서 데이터 사용X -> TodoItem에서 Context에서 데이터 가져와 map으로 반복문 이건 되는 건가?
+- ContextAPI는 저장소 ? 인데 데이터를 보내고 보내고 이렇게 2번은 안되는건가 ? 무언가 이해는 되는 것 같은데 표현을 못하겠다..
 
-
-
+<hr>
 
 
 ## 해야할 것 
 
 ```
+-> input데이터 받아서 배열에 추가 기능 ,, Button에 따른 기능 및 할일에 접근하기 위한 방법을 찾아봤는데
+useEffect사용, onCreate 등 .. 너무 험난하고 직접 짜려니 어렵다.. Redux를 사용하지 않는 방법을 검색해보면 
+useReducer훅까지는 다 사용한다 ..
 
--> map으로 돌려주기 ..
--> input데이터 받아서 추가 기능
 -> 삭제 기능 
 ```
 
