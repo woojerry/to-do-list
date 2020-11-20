@@ -137,14 +137,17 @@ function TodoCreate() {
   );
 }
 ```
+
+> 여기까지는 기본적인 틀 및 CSS에 대한 이해를 거쳐 이제 내 스스로 짜보려하나 쉽지않았다.
 <hr>
 
 ## Context API를 활용해 값 보여주기
 > 각 컴포넌트들의 구조가 App > TodoList > TodoItem 일 때, props문법 대신 Context API를 활용해 원래 할일들에 대한 정보를 보여주기
 ```jsx
 구조는 APP -> TodoList -> TodoItem 으로 할일의 데이터 바인딩을 하려고 한다.
-1. useContext를 import해온 뒤, 범위를 생성하고 App.js에서 TodoList.js로 보내야 하므로 export도 해준다.
+1. useContext를 import해온 뒤, 범위를 생성하고 App.js에서 TodoList.js로 보내야 하므로(다른 파일에서 사용) export도 해준다.
 2. TodoList.js에서 useContext로 공유된 값 가져와 map으로 반복해주기
+3. TodoItem.js에서 useContext로 공유된 값 가져와 TodoItem 컴포넌트에 데이터 바인딩 해주기
 ```
 ```jsx
 // App.js에서 1번
@@ -190,13 +193,57 @@ function TodoList() {
       )
 }
 ```
+```jsx
+// TodoIem.js에서 3번
+
+import {할일context} from './App.js' 
+
+function TodoItem(id, text, done) {
+
+  let 할일 = useContext(할일context); 
+
+
+  return (
+       <TodoItemBlock>  
+      <CheckCircle done={할일.done}>{할일.done && <MdDone />}</CheckCircle>
+      <Text done={할일.done}>{할일.text}</Text>
+      <Remove>
+        <MdDelete />
+      </Remove>
+    </TodoItemBlock>
+    
+  );
+}
+```
+- 하지만 여기서 문제점이 생겼다.. 데이터에 있는 할일들에 대한 값을 갯수는 인식하나 값을 인식못해 나타나지 않았다.
+- TodoList-> TodoItem으로 데이터 바인딩 시 props로 바꾸어 줬더니 해결
+- TodoItem은 context에서 데이터를 가져오는게 아니고 TodoItemList에서 map으로 만들어준 걸 props에서 데이터를 가져와야 한다.
+```jsx
+function TodoItem({id, text, done}) {
+
+  
+  return (
+    <TodoItemBlock id={id}>
+      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
+      <Text done={done}>{text}</Text>
+      <Remove>
+        <MdDelete />
+      </Remove>
+    </TodoItemBlock>
+  );
+}
+```
+- ContextAPI는 저장소 ? 인데 데이터를 보내고 보내고 이렇게 2번은 안되는건가 ? 무언가 이해는 되는 것 같은데 표현을 못하겠다.
+- Q. ContextAPI를 사용하여 TodoList -> TodoList에서 데이터 사용X -> TodoItem에서 Context에서 데이터 가져와 map으로 반복문 이건 되는 건가?
+
+
 
 
 
 ## 해야할 것 
-> 기본적인 틀 및 CSS에 대한 이해를 거쳐 이제 내 스스로 짜보려하나 쉽지않았다.
+
 ```
-기본 값 데이터 바인딩 (기본 값 받아와 State로 저장해 props로 데이터 바인딩 APP-TodoList-TodoItem)
+
 -> map으로 돌려주기 ..
 -> input데이터 받아서 추가 기능
 -> 삭제 기능 
