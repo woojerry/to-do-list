@@ -38,7 +38,7 @@ let [할일, 할일변경] = useState(Data);
           <TodoCreate />
 
         </TodoTemplate>
-    </할일context.Provider>
+      </할일context.Provider>
     </>
   );
 }

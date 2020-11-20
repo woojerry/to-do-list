@@ -62,11 +62,16 @@ const Text = styled.div`
 function TodoItem() {
 
   let 할일 = useContext(할일context); 
+
+  // {할일.map(({id, text, done}) =>(
+  //  <TodoItem key={id} text={text} done={done}/>
+  //  ))}
   return (
 
     
       
     <TodoItemBlock>
+      
       <CheckCircle done={할일.done}>{할일.done && <MdDone />}</CheckCircle>
       <Text done={할일.done}>{할일.text}</Text>
       <Remove>

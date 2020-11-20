@@ -14,12 +14,20 @@ function TodoList() {
 
   let 할일 = useContext(할일context); 
 
+   // let 받아온값 = props.
+  // const 할일들 = props.할일.map((id, text, done) => (
+  //  <TodoItem text={props.할일.text} done={props.할일.done} />
+  // )) 
+
     return (
         <TodoListBlock>
             
-          {할일.map((할일들) =>(
-            <TodoItem key={할일.id} text={할일.text} done={할일.done}/>
+          {할일.map(({id, text, done}) =>(
+            <TodoItem key={id} text={text} done={done}/>
           ))}
+         
+          <TodoItem text="ww" done={할일.done} />
+        
           
           
       
