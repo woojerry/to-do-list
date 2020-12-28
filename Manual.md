@@ -137,21 +137,120 @@ function TodoCreate() {
   );
 }
 ```
+
+> 여기까지는 기본적인 틀 및 CSS에 대한 이해를 거쳐 이제 내 스스로 짜보려하나 쉽지않았다.
 <hr>
 
 ## Context API를 활용해 값 보여주기
-- 각 컴포넌트들이 App > TodoList > TodoItem
+> 각 컴포넌트들의 구조가 App > TodoList > TodoItem 일 때, props문법 대신 Context API를 활용해 원래 할일들에 대한 정보를 보여주기
+```jsx
+구조는 APP -> TodoList -> TodoItem 으로 할일의 데이터 바인딩을 하려고 한다.
+1. useContext를 import해온 뒤, 범위를 생성하고 App.js에서 TodoList.js로 보내야 하므로(다른 파일에서 사용) export도 해준다.
+2. TodoList.js에서 useContext로 공유된 값 가져와 map으로 반복해주기
+3. TodoItem.js에서 useContext로 공유된 값 가져와 TodoItem 컴포넌트에 데이터 바인딩 해주기
+```
+```jsx
+// App.js에서 1번
+import React, {Component, useState, useContext} from 'react'; 
+
+export let 할일context = React.createContext(); // 범위 생성 및 export
+
+return (
+    <>
+    <할일context.Provider value={할일}> // 범위로 감싸기 
+      <GlobalStyle />
+        <TodoTemplate>
+
+          <TodoHead />
+
+        
+                <TodoList/>
+          
+          
+          <TodoCreate />
+
+        </TodoTemplate>
+      </할일context.Provider>
+    </>
+  );
+}
+```
+```jsx
+// TodoList.js에서 2번 
+
+import {할일context} from './App.js' // 공유된 값 가져오기 
+
+function TodoList() {
+
+  let 할일 = useContext(할일context); // 공유된 값 가져오기
+    
+  return (
+        <TodoListBlock>
+          {할일.map(({id, text, done}) =>(
+            <TodoItem key={id} text={text} done={done}/>
+          ))}
+        </TodoListBlock>
+      )
+}
+```
+```jsx
+// TodoIem.js에서 3번
+
+import {할일context} from './App.js' 
+
+function TodoItem(id, text, done) {
+
+  let 할일 = useContext(할일context); 
+
+
+  return (
+       <TodoItemBlock>  
+      <CheckCircle done={할일.done}>{할일.done && <MdDone />}</CheckCircle>
+      <Text done={할일.done}>{할일.text}</Text>
+      <Remove>
+        <MdDelete />
+      </Remove>
+    </TodoItemBlock>
+    
+  );
+}
+```
+- 하지만 여기서 문제점이 생겼다.. 데이터에 있는 할일들에 대한 값을 갯수는 인식하나 값을 인식못해 나타나지 않았다.
+- TodoList-> TodoItem으로 데이터 바인딩 시 props로 바꾸어 줬더니 해결
+- TodoItem은 context에서 데이터를 가져오는게 아니고 TodoItemList에서 map으로 만들어준 걸 props에서 데이터를 가져와야 한다.
+```jsx
+function TodoItem({id, text, done}) {
+
+  
+  return (
+    <TodoItemBlock id={id}>
+      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
+      <Text done={done}>{text}</Text>
+      <Remove>
+        <MdDelete />
+      </Remove>
+    </TodoItemBlock>
+  );
+}
+```
+- ContextAPI는 저장소 ? 인데 데이터를 보내고 보내고 이렇게 2번은 안되는건가 ? 무언가 이해는 되는 것 같은데 표현을 못하겠다..
+
+<hr>
 
 
 ## 해야할 것 
-> 기본적인 틀 및 CSS에 대한 이해를 거쳐 이제 내 스스로 짜보려하나 쉽지않았다.
+
 ```
-기본 값 데이터 바인딩 (기본 값 받아와 State로 저장해 props로 데이터 바인딩 APP-TodoList-TodoItem)
--> map으로 돌려주기 ..
--> input데이터 받아서 추가 기능
+-> input데이터 받아서 배열에 추가 기능 ,, Button에 따른 기능 및 할일에 접근하기 위한 방법을 찾아봤는데
+useEffect사용, onCreate 등 .. 너무 험난하고 직접 짜려니 어렵다.. Redux를 사용하지 않는 방법을 검색해보면 
+useReducer훅까지는 다 사용한다 ..
+
 -> 삭제 기능 
 ```
-
+<hr>
+- 삭제 추가에 따른 할일들이 담겨있는 배열에 대한 상태를 관리하는게 그려지지 않았다.
+- 결국 useReducer까지는 사용해야 상태를 관리할 수 있다고 판단하여 CSS부분과 기초적인 틀을 가져왔던 블로그를 참고해 완성하기로 결정했다.
+https://react.vlpt.us/mashup-todolist/
 
 
 
