@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+//import { 할일context } from './App.js';
+//import { 할일변경context } from './App.js';
 
 const CircleButton = styled.button`
   background: #38d9a9;
@@ -32,7 +34,7 @@ const CircleButton = styled.button`
   justify-content: center;
 
   transition: 0.125s all ease-in;
-  ${props =>
+  ${(props) =>
     props.open && // open이 true이면 뒤 CSS 적용
     css`
       background: #ff6b6b;
@@ -76,20 +78,33 @@ const Input = styled.input`
 `;
 
 function TodoCreate() {
+  // let 할일 = useContext(할일context);
+  // let 할일변경 = useContext(할일변경context);
+
   const [open, setOpen] = useState(false);
 
   const onToggle = () => setOpen(!open); // open값 바꿔주기
   // onClick ={()=> setOpen(!open)}
+
+  useEffect(() => {
+    console.log('use');
+  });
+
   return (
     <>
       {open && ( // open=true일 때 컴포넌트 보여줌.
         <InsertFormPositioner>
           <InsertForm>
-            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+            <Input
+              autoFocus
+              placeholder="할 일을 입력 후, Enter 를 누르세요"
+              //onKeyPress={EnterKeyPress} // Enter키 인식??
+              //onCreate={handleCreate}
+            />
           </InsertForm>
         </InsertFormPositioner>
       )}
-      <CircleButton onClick={onToggle} open={open}> 
+      <CircleButton onClick={onToggle} open={open}>
         <MdAdd />
       </CircleButton>
     </>

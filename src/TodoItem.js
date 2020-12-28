@@ -1,7 +1,8 @@
-import React , {useContext} from 'react';
+import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
-import {할일context} from './App.js' 
+import { TodoDispatchContext } from './TodoContext.js';
+//import {할일context} from './App.js'
 
 const Remove = styled.div`
   display: flex;
@@ -17,13 +18,13 @@ const Remove = styled.div`
 `;
 
 //TodoItemBlock 위에 커서가 있을 때, Remove 컴포넌트를 보여주라는 의미
-const TodoItemBlock = styled.div` 
+const TodoItemBlock = styled.div`
   display: flex;
   align-items: center;
   padding-top: 12px;
   padding-bottom: 12px;
   &:hover {
-    ${Remove} {  
+    ${Remove} {
       display: initial;
     }
   }
@@ -40,7 +41,7 @@ const CheckCircle = styled.div`
   justify-content: center;
   margin-right: 20px;
   cursor: pointer;
-  ${props =>
+  ${(props) =>
     props.done &&
     css`
       border: 1px solid #38d9a9;
@@ -52,33 +53,36 @@ const Text = styled.div`
   flex: 1;
   font-size: 21px;
   color: #495057;
-  ${props =>
+  ${(props) =>
     props.done &&
     css`
       color: #ced4da;
     `}
 `;
 
-function TodoItem() {
+// function TodoItem({id, text, done}) {
+// const onRemove = () => {}
 
-  let 할일 = useContext(할일context); 
+// //   return (
+// //     <TodoItemBlock id={id}>
+// //       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
+// //       <Text done={done}>{text}</Text>
+// //       <Remove onClick ={()=>{}}>
+// //         <MdDelete />
+// //       </Remove>
+// //     </TodoItemBlock>
+// //   );
+// // }
 
-  // {할일.map(({id, text, done}) =>(
-  //  <TodoItem key={id} text={text} done={done}/>
-  //  ))}
+function TodoItem({ id, done, text }) {
   return (
-
-    
-      
     <TodoItemBlock>
-      
-      <CheckCircle done={할일.done}>{할일.done && <MdDone />}</CheckCircle>
-      <Text done={할일.done}>{할일.text}</Text>
+      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
+      <Text done={done}>{text}</Text>
       <Remove>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
-    
   );
 }
 
