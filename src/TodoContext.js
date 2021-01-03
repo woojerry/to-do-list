@@ -25,7 +25,7 @@ const initialTodos = [
 
 function todoReducer(state, action) {
   switch (action.type) {
-    case 'Create':
+    case 'CREATE':
       return state.concat(action.todo);
     case 'TOGGLE':
       return state.map((todo) =>
@@ -45,6 +45,9 @@ export const TodoNextIdContext = React.createContext();
 export function TodoProvider({ children }) {
   const [state, dispatch] = useReducer(todoReducer, initialTodos);
   const nextId = useRef(5); // nextId 값은 useRef로 관리
+
+  // App component에서 component들을 TodoProvider를 통해 감싸주기 때문에 그 안에 있는 컴포넌트들이 적용되게끔
+  // children props를 넣어주어 감싸진 component들이 적용되게 하기
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>

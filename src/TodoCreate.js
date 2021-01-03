@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+import { TodoDispatchContext, TodoNextIdContext } from './TodoContext.js';
 //import { 할일context } from './App.js';
 //import { 할일변경context } from './App.js';
 
@@ -80,10 +81,29 @@ const Input = styled.input`
 function TodoCreate() {
   // let 할일 = useContext(할일context);
   // let 할일변경 = useContext(할일변경context);
+  const todoDispatch = useContext(TodoDispatchContext);
+  const todoNextId = useContext(TodoNextIdContext);
 
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
 
   const onToggle = () => setOpen(!open); // open값 바꿔주기
+  const onChange = (e) => setValue(e.target.value); // e.target.value 사용자가 입력한 것 받아오기
+  const onSubmit = (e) => {
+    e.preventDefault(); // 새로고침 방지
+    todoDispatch({
+      type: 'CREATE',
+      todo: {
+        id: todoNextId.current,
+        text: value,
+        done: false,
+      },
+    });
+    setValue('');
+    setOpen(false);
+    todoNextId.current += 1;
+  };
+
   // onClick ={()=> setOpen(!open)}
 
   useEffect(() => {
@@ -94,10 +114,12 @@ function TodoCreate() {
     <>
       {open && ( // open=true일 때 컴포넌트 보여줌.
         <InsertFormPositioner>
-          <InsertForm>
+          <InsertForm onSubmit={onSubmit}>
             <Input
               autoFocus
               placeholder="할 일을 입력 후, Enter 를 누르세요"
+              onChange={onChange}
+              value={value}
               //onKeyPress={EnterKeyPress} // Enter키 인식??
               //onCreate={handleCreate}
             />
@@ -111,4 +133,4 @@ function TodoCreate() {
   );
 }
 
-export default TodoCreate;
+export default React.memo(TodoCreate);

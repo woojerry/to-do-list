@@ -75,15 +75,21 @@ const Text = styled.div`
 // // }
 
 function TodoItem({ id, done, text }) {
+  const todoDispatch = useContext(TodoDispatchContext);
+  const onToggle = () => todoDispatch({ type: 'TOGGLE', id }); // id payload?
+  const onRemove = () => todoDispatch({ type: 'REMOVE', id });
+
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
+      <CheckCircle done={done} onClick={onToggle}>
+        {done && <MdDone />}
+      </CheckCircle>
       <Text done={done}>{text}</Text>
-      <Remove>
+      <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
   );
 }
 
-export default TodoItem;
+export default React.memo(TodoItem); // 불필요한 리렌더링을 방지
